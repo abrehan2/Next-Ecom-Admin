@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { storeSchema } from "@/app/partials/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
@@ -45,6 +45,7 @@ export const StoreModal = () => {
                     <FormControl>
                       <Input placeholder="Nike" {...field} />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
