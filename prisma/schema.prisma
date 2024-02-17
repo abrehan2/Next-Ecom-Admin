@@ -14,7 +14,7 @@ datasource db {
 model Store {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  userId    String   @unique @db.ObjectId
+  userId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
