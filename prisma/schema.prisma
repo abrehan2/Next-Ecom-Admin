@@ -9,3 +9,12 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+// STORE SCHEMA -
+model Store {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  userId    String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

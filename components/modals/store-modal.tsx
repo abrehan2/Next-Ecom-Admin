@@ -1,18 +1,33 @@
 "use client";
 
 // IMPORTS -
+import * as z from "zod";
+import { useState } from "react";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "../ui/modal";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { storeSchema } from "@/app/partials/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import axios from "axios";
+
+// COMPONENTS -
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
+// CODE STARTS HERE -
 export const StoreModal = () => {
   const storeModal = useStoreModal();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof storeSchema>>({
     resolver: zodResolver(storeSchema),
     defaultValues: {
@@ -21,8 +36,23 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof storeSchema>) => {
-    console.log(values);
-    // TODO: CREATE STORE
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/stores", values);
+      toast({
+        title: "Success",
+        description: "Store created",
+      });
+    } catch (error) {
+      console.log("STORE-MODAL", error);
+      toast({
+        title: "Error",
+        description: `${error}`,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,7 +73,7 @@ export const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Nike" {...field} />
+                      <Input placeholder="Nike" {...field} disabled={loading} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -51,8 +81,16 @@ export const StoreModal = () => {
               />
 
               <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-                <Button variant={"outline"} onClick={storeModal.onClose}>Cancel</Button>
-                <Button type="submit">Continue</Button>
+                <Button
+                  variant={"outline"}
+                  onClick={storeModal.onClose}
+                  disabled={loading}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={loading}>
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>
