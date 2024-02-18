@@ -39,10 +39,7 @@ export const StoreModal = () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/stores", values);
-      toast({
-        title: "Success",
-        description: "Store created",
-      });
+      window.location.assign(`/${response.data.id}`); // MOVE TO PARAMS WALA STORE 
     } catch (error) {
       console.log("STORE-MODAL", error);
       toast({

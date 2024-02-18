@@ -20,7 +20,7 @@ export default async function SetupLayout({
     },
   });
 
-  console.log("STORE", store);
+ 
 
   if (store) {
     redirect(`/${store.id}`);

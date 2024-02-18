@@ -18,3 +18,8 @@ export type useStoreProps = {
   onOpen: () => void,
   onClose: () => void
 }
+
+// DASHBOARD PAGE PROPS -
+export type dashboardProps = {
+  params: {storeId: string}
+}
