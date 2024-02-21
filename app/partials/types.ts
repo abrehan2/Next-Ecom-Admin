@@ -1,3 +1,6 @@
+// IMPORTS -
+import { Store } from "@prisma/client";
+
 // MODAL PROPS -
 export type ModalProps = {
     title: string,
@@ -30,3 +33,15 @@ export type SettingsProps = {
     storeId: string;
   };
 };
+
+// SETTINGS FORM PROPS -
+export type SettingFormProps = {
+  initialData: Store;
+};
+
+// HEADING PROPS -
+export type HeadingProps = {
+  title: string;
+  description: string;
+};
+
