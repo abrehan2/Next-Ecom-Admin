@@ -23,3 +23,10 @@ export type useStoreProps = {
 export type dashboardProps = {
   params: {storeId: string}
 }
+
+// SETTINGS PAGE PROPS - 
+export type SettingsProps = {
+  params: {
+    storeId: string;
+  };
+};
