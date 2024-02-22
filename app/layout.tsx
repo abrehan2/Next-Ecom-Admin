@@ -7,7 +7,7 @@ import "./globals.css";
 // COMPONENTS -
 import { StoreModal } from "@/components/modals/store-modal";
 import Hydrate from "./partials/Hydrate";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 
 // CODE STARTS HERE -
 const inter = Inter({ subsets: ["latin"] });

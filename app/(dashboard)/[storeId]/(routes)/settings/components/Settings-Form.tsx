@@ -5,9 +5,12 @@ import * as z from "zod";
 import { SettingFormProps } from "@/app/partials/types";
 import { Trash } from "lucide-react";
 import { settingsSchema } from "@/app/partials/schema";
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { useParams, useRouter } from "next/navigation";
 
 // COMPONENTS -
 import { Heading } from "@/components/Heading";
@@ -21,6 +24,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+
 // PARTIAL -
 type SettingFormValues = z.infer<typeof settingsSchema>;
 
@@ -28,6 +32,8 @@ const SettingsForm: React.FC<SettingFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const methods = useForm();
+  const params = useParams();
+  const router = useRouter();
 
   const formData = useForm<SettingFormValues>({
     resolver: zodResolver(settingsSchema),
@@ -35,7 +41,20 @@ const SettingsForm: React.FC<SettingFormProps> = ({ initialData }) => {
   });
 
   const onSubmitHandler = async (data: SettingFormValues) => {
-    console.log(data);
+    try {
+
+      setLoading(true);
+      await axios.put(`/api/stores/${params.storeId}`, data);
+      router.refresh();
+      toast.success("Store updated");
+
+    }
+    catch(error) {
+      toast.error("Something went wrong")
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
