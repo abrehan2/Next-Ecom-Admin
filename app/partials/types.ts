@@ -45,3 +45,10 @@ export type HeadingProps = {
   description: string;
 };
 
+// ALERT MODAL -
+export type AlertModalProps = {
+  isOpen: boolean,
+  onClose: () => void,
+  onConfirm: () => void,
+  loading: boolean
+}
