@@ -12,9 +12,21 @@ datasource db {
 
 // STORE SCHEMA -
 model Store {
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  userId     String
+  billboards Billboard[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+// BILL BOARD SCHEMA -
+model Billboard {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  userId    String 
+  storeId   String   @db.ObjectId
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  label     String
+  imageUrl  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

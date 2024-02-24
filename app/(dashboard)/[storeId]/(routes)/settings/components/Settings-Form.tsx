@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert-modal";
 import ApiAltert from "@/components/api-alert";
+import { useOrigin } from "@/hooks/use-origin";
 
 // PARTIAL -
 type SettingFormValues = z.infer<typeof settingsSchema>;
@@ -35,6 +36,7 @@ const SettingsForm: React.FC<SettingFormProps> = ({ initialData }) => {
   const methods = useForm();
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const formData = useForm<SettingFormValues>({
     resolver: zodResolver(settingsSchema),
