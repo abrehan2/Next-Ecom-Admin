@@ -1,5 +1,5 @@
 // IMPORTS -
-import { Store } from "@prisma/client";
+import { Billboard, Store } from "@prisma/client";
 
 // MODAL PROPS -
 export type ModalProps = {
@@ -37,6 +37,11 @@ export type SettingsProps = {
 // SETTINGS FORM PROPS -
 export type SettingFormProps = {
   initialData: Store;
+};
+
+// BILL BOARD FORM PROPS - 
+export type BillboardFormProps = {
+  initialData: Billboard | null;
 };
 
 // HEADING PROPS -
