@@ -88,14 +88,16 @@ const BillboardsForm: React.FC<BillboardFormProps> = ({ initialData }) => {
       />
       <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
-        <Button
-          variant={"destructive"}
-          size={"icon"}
-          onClick={() => setOpen(true)}
-          disabled={loading}
-        >
-          <Trash className="h-4 w-4" />
-        </Button>
+        {initialData && (
+          <Button
+            variant={"destructive"}
+            size={"icon"}
+            onClick={() => setOpen(true)}
+            disabled={loading}
+          >
+            <Trash className="h-4 w-4" />
+          </Button>
+        )}
       </div>
       <Separator />
       <FormProvider {...formData}>
