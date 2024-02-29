@@ -1,10 +1,10 @@
 "use client";
 
 // IMPORTS -
-import { Trash } from "lucide-react";
+import { ImagePlus, Trash } from "lucide-react";
 import { Button } from "./ui/button";
 import Image from "next/image";
-import {CldUploadWidget} from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 
 interface imageUploadProps {
   disabled?: boolean;
@@ -54,14 +54,28 @@ const ImageUpload: React.FC<imageUploadProps> = ({
           </div>
         ))}
       </div>
-      <CldUploadWidget
-        onUpload={onUpload}
-        uploadPreset="ncrev3jd"
-      >
-        {}
+      <CldUploadWidget onUpload={onUpload} uploadPreset="ncrev3jd">
+        {({ open }) => {
+          const onClick = () => {
+            open();
+          };
+          return (
+            <Button
+              type="button"
+              disabled={disabled}
+              variant={"secondary"}
+              onClick={onClick}
+            >
+              <ImagePlus
+                className="
+                h-4 w-4 mr-2"
+              />
+              Upload an Image
+            </Button>
+          );
+        }}
       </CldUploadWidget>
     </div>
   );
 };
-
 export default ImageUpload;

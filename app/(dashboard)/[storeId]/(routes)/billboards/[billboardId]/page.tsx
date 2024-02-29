@@ -7,7 +7,6 @@ const BillboardPage = async ({
 }: {
   params: { billboardId: string };
 }) => {
-  console.log(params);
 
   const billboard =
     params.billboardId === "new"

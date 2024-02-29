@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert-modal";
 import ApiAltert from "@/components/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
+import ImageUpload from "@/components/ImageUpload";
 
 // PARTIAL -
 type BillboardFormValues = z.infer<typeof BillboardsSchema>;
@@ -106,6 +107,23 @@ const BillboardsForm: React.FC<BillboardFormProps> = ({ initialData }) => {
           className="
               space-y-8 w-full"
         >
+          <FormField
+            name="imageUrl"
+            control={formData.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               name="label"
