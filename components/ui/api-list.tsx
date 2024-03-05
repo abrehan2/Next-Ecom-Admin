@@ -3,6 +3,7 @@
 import { useOrigin } from "@/hooks/use-origin";
 // IMPORTS -
 import { useParams, useRouter } from "next/navigation";
+import ApiAltert from "../api-alert";
 
 // PARTIALS -
 interface ApiListProps {
@@ -14,12 +15,43 @@ export const ApiList: React.FC<ApiListProps> = ({
   entityName,
   entityIdName,
 }) => {
-    
   const params = useParams();
   const origin = useOrigin();
 
-  return <div>
+  const baseUrl = `${origin}/api/${params.storeId}`;
 
+  console.log(baseUrl);
 
-  </div>;
+  return (
+    <>
+      <ApiAltert
+        title="GET"
+        variant="public"
+        description={`${baseUrl}/${entityName}`}
+      />
+      <ApiAltert
+        title="GET"
+        variant="public"
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
+      />
+
+      <ApiAltert
+        title="POST"
+        variant="admin"
+        description={`${baseUrl}/${entityName}`}
+      />
+
+      <ApiAltert
+        title="PUT"
+        variant="admin"
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
+      />
+
+      <ApiAltert
+        title="DELETE"
+        variant="admin"
+        description={`${baseUrl}/${entityName}/{${entityIdName}}`}
+      />
+    </>
+  );
 };
