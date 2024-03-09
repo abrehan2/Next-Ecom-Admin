@@ -14,5 +14,11 @@ export const settingsSchema = z.object({
 // BILL BOARD FORM SCHEMA -
 export const BillboardsSchema = z.object({
   label: z.string().min(1),
-  imageUrl: z.string().min(1)
+  imageUrl: z.string().min(1),
+});
+
+// CATEGORY FORM SCHEMA -
+export const CategorySchema = z.object({
+  name: z.string().min(1),
+  billboardId: z.string().min(1),
 });

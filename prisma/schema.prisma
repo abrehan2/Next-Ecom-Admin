@@ -18,14 +18,34 @@ model Store {
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   billboards Billboard[]
+  Category   Category[]
 }
 
+// BILLBOARD -
 model Billboard {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String   @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String     @db.ObjectId
   label     String
   imageUrl  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  store     Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  Category  Category[]
+
+  @@index([storeId])
+}
+
+// CATEGORY -
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String    @db.ObjectId
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  billboardId String    @db.ObjectId
+  billBoard   Billboard @relation(fields: [billboardId], references: [id], onDelete: Cascade)
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([storeId])
+  @@index([billboardId])
 }
