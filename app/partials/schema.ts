@@ -22,3 +22,9 @@ export const CategorySchema = z.object({
   name: z.string().min(1),
   billboardId: z.string().min(1),
 });
+
+// SIZE FORM SCHEMA -
+export const SizeSchema = z.object({
+  name: z.string().min(1),
+  value: z.string().min(1),
+});
