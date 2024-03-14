@@ -20,6 +20,7 @@ model Store {
   billboards Billboard[]
   Category   Category[]
   sizes      Size[]
+  colors      Color[]
 }
 
 // BILLBOARD -
@@ -53,6 +54,20 @@ model Category {
 
 // SIZE -
 model Size {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String   @db.ObjectId
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  name      String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([storeId])
+}
+
+
+// COLOR -
+model Color {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   storeId   String   @db.ObjectId
   store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
