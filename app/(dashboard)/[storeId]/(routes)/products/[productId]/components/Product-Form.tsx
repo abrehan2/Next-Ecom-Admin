@@ -329,7 +329,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </Button>
         </form>
       </FormProvider>
-      {/* <Separator /> */}
+      <Separator />
     </>
   );
 };
