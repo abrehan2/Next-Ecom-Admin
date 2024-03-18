@@ -20,7 +20,8 @@ model Store {
   billboards Billboard[]
   Category   Category[]
   sizes      Size[]
-  colors      Color[]
+  colors     Color[]
+  produtct   Product[]
 }
 
 // BILLBOARD -
@@ -47,6 +48,7 @@ model Category {
   name        String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  Product     Product[]
 
   @@index([storeId])
   @@index([billboardId])
@@ -54,27 +56,64 @@ model Category {
 
 // SIZE -
 model Size {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String   @db.ObjectId
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String    @db.ObjectId
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   name      String
   value     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product[]
 
   @@index([storeId])
 }
 
-
 // COLOR -
 model Color {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  storeId   String   @db.ObjectId
-  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  storeId   String    @db.ObjectId
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
   name      String
   value     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  product   Product[]
+
+  @@index([storeId])
+}
+
+// PRODUCT -
+model Product {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String   @db.ObjectId
+  store       Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  categoryId  String   @db.ObjectId
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name        String
+  price       Float
+  isFeatured  Boolean  @default(false)
+  isArchived  Boolean  @default(false)
+  sizeId      String   @db.ObjectId
+  size        Size     @relation(fields: [sizeId], references: [id], onDelete: Cascade)
+  colorId     String   @db.ObjectId
+  color       Color    @relation(fields: [colorId], references: [id])
+  image       Image[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([sizeId])
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([colorId])
+}
+
+model Image {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId String   @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([storeId])
+  @@index([productId])
 }

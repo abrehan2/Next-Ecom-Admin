@@ -1,5 +1,5 @@
 // IMPORTS -
-import { Billboard, Category, Color, Size, Store } from "@prisma/client";
+import { Billboard, Category, Color, Image, Product, Size, Store } from "@prisma/client";
 
 // MODAL PROPS -
 export type ModalProps = {
@@ -53,6 +53,16 @@ export type SizeFormProps = {
 export type ColorFormProps = {
   initialData: Color | null;
 };
+
+// PRODUCT FORM PROPS -
+export type ProductFormProps = {
+  initialData: Product & {
+    images: Image[]
+  } | null;
+  categories: Category[],
+  color: Color[],
+  sizes: Size[]
+}
 
 export type CategoryFormProps = {
   initialData: Category | null;
