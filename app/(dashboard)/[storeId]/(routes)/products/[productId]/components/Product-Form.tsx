@@ -27,13 +27,24 @@ import {
 import { Input } from "@/components/ui/input";
 import AlertModal from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ImageUpload";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // PARTIAL -
 type ProductFormValues = z.infer<typeof ProductSchema>;
 
-const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, color, sizes}) => {
+const ProductForm: React.FC<ProductFormProps> = ({
+  initialData,
+  categories,
+  color,
+  sizes,
+}) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const params = useParams();
@@ -46,19 +57,21 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
 
   const formData = useForm<ProductFormValues>({
     resolver: zodResolver(ProductSchema),
-    defaultValues: initialData ? {
-      ...initialData,
-      price: parseFloat(String(initialData?.price))
-    } : {
-      name: "",
-      images: [],
-      price: 0,
-      categoryId: "",
-      colorId: "",
-      sizeId: "",
-      isFeatured: false,
-      isArchived: false
-    },
+    defaultValues: initialData
+      ? {
+          ...initialData,
+          price: parseFloat(String(initialData?.price)),
+        }
+      : {
+          name: "",
+          images: [],
+          price: 0,
+          categoryId: "",
+          colorId: "",
+          sizeId: "",
+          isFeatured: false,
+          isArchived: false,
+        },
   });
 
   const onSubmitHandler = async (data: ProductFormValues) => {
@@ -139,8 +152,14 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
                   <ImageUpload
                     value={field.value.map((image) => image.url)}
                     disabled={loading}
-                    onChange={(url) => field.onChange([...field.value, {url}])}
-                    onRemove={(url) => field.onChange([...field.value.filter((current) => current.url !== url)])}
+                    onChange={(url) =>
+                      field.onChange([...field.value, { url }])
+                    }
+                    onRemove={(url) =>
+                      field.onChange([
+                        ...field.value.filter((current) => current.url !== url),
+                      ])
+                    }
                   />
                 </FormControl>
               </FormItem>
@@ -245,7 +264,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
               )}
             />
 
-<FormField
+            <FormField
               name="colorId"
               control={formData.control}
               render={({ field }) => (
@@ -277,35 +296,30 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, categories, colo
                 </FormItem>
               )}
             />
-             <FormField
+            <FormField
               name="isFeatured"
               control={formData.control}
               render={({ field }) => (
                 <FormItem
-                className="flex 
+                  className="flex 
                 flex-row
                 items-start
                 space-x-3
                 space-y-0
                 rounded-md
                 border
-                p-4" 
+                p-4"
                 >
                   <FormControl>
-                    <Checkbox 
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
                     />
                   </FormControl>
                   <div className="space-y-0 leading-none">
-                   <FormLabel>
-                    Featured
-                   </FormLabel>
-                   <FormDescription>
-                    
-                   </FormDescription>
+                    <FormLabel>Featured</FormLabel>
+                    <FormDescription></FormDescription>
                   </div>
-                  
                 </FormItem>
               )}
             />
