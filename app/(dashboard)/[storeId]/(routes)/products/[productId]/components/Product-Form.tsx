@@ -77,16 +77,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const onSubmitHandler = async (data: ProductFormValues) => {
     try {
       setLoading(true);
+
       if (initialData) {
         await axios.put(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          `/api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
       }
+      await axios.post(`/api/${params.storeId}/products`, data);
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/products`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");
@@ -98,16 +100,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`
-      );
+      await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
-      toast.success("Billboard deleted");
+      router.push(`/${params.storeId}/products`);
+      toast.success("Product deleted");
     } catch (error) {
-      toast.error(
-        "Make sure you removed all categories using this billboard first"
-      );
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -143,28 +141,32 @@ const ProductForm: React.FC<ProductFormProps> = ({
               space-y-8 w-full"
         >
           <FormField
-            name="images"
             control={formData.control}
+            name="images"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Background Image</FormLabel>
+                <FormLabel>Images</FormLabel>
                 <FormControl>
                   <ImageUpload
-                    value={field.value.map((image) => image.url)}
+                    value={field?.value?.map((image) => image.url)}
                     disabled={loading}
                     onChange={(url) =>
-                      field.onChange([...field.value, { url }])
+                      field.onChange([...field?.value, { url }])
                     }
                     onRemove={(url) =>
                       field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
+                        ...field?.value.filter(
+                          (current) => current.url !== url
+                        ),
                       ])
                     }
                   />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
+
           <div className="grid grid-cols-3 gap-8">
             <FormField
               name="name"
@@ -318,7 +320,38 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   </FormControl>
                   <div className="space-y-0 leading-none">
                     <FormLabel>Featured</FormLabel>
-                    <FormDescription></FormDescription>
+                    <FormDescription>
+                      This product will display on homepage
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="isArchived"
+              control={formData.control}
+              render={({ field }) => (
+                <FormItem
+                  className="flex 
+                flex-row
+                items-start
+                space-x-3
+                space-y-0
+                rounded-md
+                border
+                p-4"
+                >
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-0 leading-none">
+                    <FormLabel>Archived</FormLabel>
+                    <FormDescription>
+                      This will not display anywhere in the store.
+                    </FormDescription>
                   </div>
                 </FormItem>
               )}

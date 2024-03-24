@@ -23,13 +23,17 @@ const ImageUpload: React.FC<imageUploadProps> = ({
     onChange(result.info.secure_url);
   };
 
+
+  console.log(value)
+
+
   return (
     <div>
       <div
         className="mb-4 flex items-center 
       gap-4"
       >
-        {value.map((url) => (
+        {value?.map((url) => (
           <div
             key={url}
             className="relative 
