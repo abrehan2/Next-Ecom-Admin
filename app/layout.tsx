@@ -37,6 +37,6 @@ export default function RootLayout({
   );
 }
 
-// 6:35:12 // npx prisma generate - Allows to use all the query methods e.g find
+// 7:16:33 // npx prisma generate - Allows to use all the query methods e.g find
 // npx prisma db push - Allows to check if we have successfully setup the db connection string
 // npx prisma migrate reset - resets the entire database

@@ -22,6 +22,7 @@ model Store {
   sizes      Size[]
   colors     Color[]
   produtct   Product[]
+  order Order[]
 }
 
 // BILLBOARD -
@@ -100,6 +101,7 @@ model Product {
   image       Image[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  orderItems OrderItem[]
 
   @@index([sizeId])
   @@index([storeId])
@@ -115,5 +117,30 @@ model Image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([productId])
+}
+
+model Order {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId     String    @db.ObjectId
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[] // Relation to OrderItem model
+  isPaid     Boolean   @default(false)
+  phone      String    @default("")
+  address    String    @default("")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([storeId])
+}
+
+model OrderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String  @db.ObjectId
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
   @@index([productId])
 }
