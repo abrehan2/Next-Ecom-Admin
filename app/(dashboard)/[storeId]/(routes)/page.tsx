@@ -10,11 +10,12 @@ const DashboardPage: React.FC<dashboardProps> = async ({ params }) => {
   });
 
   return (
-    <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
-      <p className="text-neutral-600 text-center dark:text-neutral-200 lg:text-3xl sm:text-base">
-        Active Store: {store?.name}
-      </p>
-    </div>
+    <div className="flex flex-col items-center justify-center w-full overflow-hidden">
+  <p className="text-neutral-600 text-center dark:text-neutral-200 sm:text-base md:text-lg lg:text-3xl mt-10">
+    Active Store: {store?.name}
+  </p>
+</div>
+
   );
 };
 
