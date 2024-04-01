@@ -9,7 +9,13 @@ const DashboardPage: React.FC<dashboardProps> = async ({ params }) => {
     },
   });
 
-  return <div>Active Store: {store?.name}</div>;
+  return (
+    <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
+      <p className="text-neutral-600 text-center dark:text-neutral-200 lg:text-3xl sm:text-base">
+        Active Store: {store?.name}
+      </p>
+    </div>
+  );
 };
 
 export default DashboardPage;
